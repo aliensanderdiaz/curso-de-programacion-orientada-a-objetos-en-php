@@ -1,0 +1,770 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+<title>Curso de Programación orientada a objetos en PHP</title>
+</head>
+
+<body>
+<header class="text-center">
+<h1>Curso de Programación orientada a objetos en PHP</h1>
+</header>
+<main class="container">
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 1 de 19 - Lo que aprenderás sobre POO en PHP</h2>
+    
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 2 de 19 - Deuda técnica</h2>
+    
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 3 de 19 - code smell</h2>
+    
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 4 de 19 - Codigo espagueti</h2>
+    
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 5 de 19 - inclusion de archivos</h2>
+    <pre class="prettyprint">
+            
+    // greet.php
+    &lt?php
+
+    function greet($name, $message) {
+        return "$name, $message";
+    }
+    </pre>
+
+    <pre class="prettyprint">
+            
+    // index.php
+    &lt?php
+
+    # warning si no encuentra el archivo
+    # fatal error si se incluye 2 veces el mismo archivo
+    // include 'greet.php';
+    // include 'greet.php';
+    
+    # fatal error si no encuentra el archivo
+    # fatal error si se incluye 2 veces el mismo archivo
+    // require 'greet.php';
+    // require 'greet.php';
+    
+    # fatal error si no encuentra el archivo
+    # no pasa nada si se incluye 2 veces el mismo archivo
+    require_once 'greet.php';
+    // require_once 'greet.php';
+    
+    echo greet('Alex', 'Cómo estas?');
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 6 de 19 - Introducción a clases y objetos</h2>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        class Person
+        {
+            public function greet()
+            {
+                return "Hola $this->name";
+            }
+        }
+        
+        class User
+        {
+            public $type;
+        }
+        
+        class Admin extends Person
+        {
+            public $name = 'Administrador';
+        }
+        
+        $user = new User;
+        $user->type = new Admin;
+        echo $user->type->greet();
+    </pre>
+    <p>Archivos separados</p>
+    <pre class="prettyprint">
+            
+    // Person.php
+    &lt?php
+
+    class Person
+    {
+        public function greet()
+        {
+            return "Hola $this->name";
+        }
+    }
+    </pre>
+    <pre class="prettyprint">
+            
+    // User.php
+    &lt?php
+
+    class User
+    {
+        public $type;
+    }
+    </pre>
+
+    <pre class="prettyprint">
+            
+        // Admin.php
+        &lt?php
+
+        include 'Person.php';
+        
+        class Admin extends Person
+        {
+            public $name = 'Administrador';
+        }
+    </pre>
+    <pre class="prettyprint">
+            
+    // index.php
+    &lt?php
+
+    include 'User.php';
+    include 'Admin.php';
+    
+    $user = new User;
+    $user->type = new Admin;
+    echo $user->type->greet();
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 6 de 19 - Abstracción</h2>
+    <p>podemos ver la abstracción de muchas formas</p>
+    <ul>
+        <li>interface</li>
+        <li>abstract</li>
+        <li>class</li>
+    </ul>
+    <p>Ejemplo con interface</p>
+    <pre class="prettyprint">
+        &lt?php
+
+        interface StoreInterface
+        {
+            public function get();
+        }
+    </pre>
+    <pre class="prettyprint">
+        &lt?php
+
+        class Database implements StoreInterface
+        {
+            public function get()
+            {
+                
+            }
+        }
+    </pre>
+    <p>Ejemplo con abstract</p>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        abstract class Base
+        {
+            public function get()
+            {
+        
+            }
+        
+            abstract public function store();
+        }
+    </pre>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        class Cached extends Base
+        {
+            public function store()
+            {
+                
+            }
+        }
+    </pre>
+    <p>Con clases</p>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        class Auth
+        {
+            protected $email;
+            protected $password;
+        
+            public function login()
+            {
+        
+            }
+        
+            public function validate()
+            {
+                
+            }
+        }
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 8 de 19 - Alcance o Encapsulamiento</h2>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        class User
+        {
+            /**
+             * public
+             * protected
+             * private
+             */
+            public const PAGINATE = 25;
+            public $username;
+            // protected $username;
+            // private $username;
+        
+        
+            public function getUsername() {
+        
+            }
+        }
+        
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 9 de 19 - Modularidad</h2>
+    
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 10 de 19 - polimorfismo</h2>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        abstract class Base2
+        {
+            protected $name;
+        
+            private function getClassName()
+            {
+                return get_called_class();
+            }
+        
+            public function login()
+            {
+                return "Mi nombre es $this->name desde la clase {$this->getClassName()}";
+            }
+        
+        }
+        
+        class Admin extends Base2
+        {
+            public function __construct($name)
+            {
+                $this->name = $name;
+            }
+        }
+        
+        class User extends Base2
+        {
+            public function __construct($name)
+            {
+                $this->name = $name;
+            }
+        }
+        
+        class Guest extends Base2
+        {
+            protected $name = 'Invitado';
+        }
+        
+        $guest = new Guest();
+        echo $guest->login();
+        echo "&ltbr>";
+        
+        $user = new User("Juliana");
+        echo $user->login();
+        echo "&ltbr>";
+        
+        $admin = new Admin("Pedro");
+        echo $admin->login();
+        echo "&ltbr>";
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 11 de 19 - polimorfismo: interfaz</h2>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        interface Search
+        {
+            public function all();
+        }
+        
+        class User2 implements Search
+        {
+            public function all()
+            {
+                return "obteniendo a los users, XML";
+            }
+        }
+        
+        class Post implements Search
+        {
+            public function all()
+            {
+                return "obteniendo a los posts, JSON";
+            }
+        }
+        
+        $user = new User2();
+        echo $user->all();
+        
+        echo "&ltbr>";
+        
+        $post = new Post();
+        echo $post->all();
+        
+        echo "&ltbr>";
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 12 de 19 - Herencia</h2>
+    <p>La palabra final en una clase impide la herencia
+        <br>
+        La palabra final en un metodo impide la sobreescritura en los objetos heredados
+    </p>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        class User3 
+        {
+            public $name;
+        
+            public function __construct($name)
+            {
+                $this->name = $name;
+            }
+        
+            // public function getName()
+            // {
+            //     return $this->name;
+            // }
+        
+            final public function getName()
+            {
+                return $this->name;
+            }
+        }
+        
+        class Admin3 extends User3
+        {
+        
+            // public function getName()
+            // {
+            //     return "soy " . $this->name;
+            // }
+        
+        }
+        
+        $admin = new Admin3('Pedro');
+        echo $admin->getName();
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 13 de 19 - Interfaces</h2>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        interface Person13
+        {
+            public function getName();
+        }
+        
+        class Admin implements Person13
+        {
+            public $name;
+        
+            public function __construct($name)
+            {
+                $this->name = $name;
+            }
+        
+            public function getName()
+            {
+                return $this->name;
+            }
+        }
+        
+        $admin = new Admin('admin');
+        
+        echo $admin->getName();
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 14 de 19 - Resumen</h2>
+    <div class="MaterialLecture-text"><p>La programación orientada a objetos es una forma de programar, un paradigma o una técnica. Los conceptos que aquí aprendiste te servirán en PHP y en otros lenguajes de programación. Recordemos que para programar de esta forma en realidad debemos crear objetos, y un objeto es una instancia de una clase y una clase es el molde. Ejemplo:</p>
+        <ul>
+        <li><strong>Programación orientada a objetos</strong>: es la técnica.</li>
+        <li><strong>PHP</strong>: es el lenguaje de programación (donde implementamos la técnica).</li>
+        </ul>
+        <p>Podemos resumir los diferentes conceptos de la siguiente manera:</p>
+        <ol>
+        <li><strong>Herencia</strong>: compartir métodos entre clases padres y clases hijas.</li>
+        <li><strong>Abstracción</strong>: significa aislar, separar y sacar.</li>
+        <li><strong>Polimorfismo</strong>: capacidad o virtud que tienen los métodos donde, por ejemplo, un mismo método puede tener diferentes comportamientos y dar diferentes resultados.</li>
+        <li><strong>Modularidad</strong>: este principio básicamente nos ayuda a tener cada vez piezas de código más pequeñas y entendibles, donde cada pieza es un módulo y muchos módulos forman el sistema entero.</li>
+        <li><strong>Encapsulamiento</strong>: un objeto debe estar aislado y ser un módulo natural. Esto se cumple aplicando la protección a las propiedades impidiendo su modificación y básicamente se refiere a controlar el acceso.</li>
+        </ol>
+        <p>Al entender este estilo conseguimos organizar mucho mejor nuestro código agrupando tareas comunes para crear una sola solución y usarla las veces que sean necesarias en nuestro proyecto. Evitamos con esto repetir código y ganamos mucho al dar mantenimiento en el futuro.</p>
+        <ol>
+        <li>Comienza con la palabra reservada <strong>class</strong>.</li>
+        <li>El código va entre llaves <strong>{ }</strong>.</li>
+        <li>La información se guarda en <strong>propiedades</strong> que pueden ser públicas, privadas o protegidas.</li>
+        <li>Cada acción la colocamos en <strong>métodos</strong> que básicamente son funciones o bloques de código dentro de una clase.</li>
+        <li><strong>$this</strong> es una variable reservada por el lenguaje que podemos usar para acceder a elementos propios, siempre y cuando estemos en la instancia de la clase.</li>
+        <li><strong>new</strong> es la palabra clave usada para crear un objeto a partir de una clase.</li>
+        </ol>
+        <p>En el mundo de la programación tenemos muchas técnicas y formas, podemos instanciar una clase dentro de otra y navegar por sus métodos sin restricción.</p>
+        <pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+          
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> 
+        </span>{
+        
+            <span class="hljs-keyword">public</span> $type;
+        
+        }
+        
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Admin</span> 
+        </span>{
+        
+            <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">greet</span><span class="hljs-params">()</span> 
+            </span>{
+                <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hola Administrador"</span>;
+            }
+        
+        }
+        
+        $user = <span class="hljs-keyword">new</span> User;
+        $user-&gt;type = <span class="hljs-keyword">new</span> Admin;
+        $user-&gt;type-&gt;greet();
+        </code></pre>
+        <pre><code class="language-php"><span class="hljs-meta">&lt;?php</span>
+          
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> 
+        </span>{
+          
+            <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">greet</span><span class="hljs-params">()</span> 
+            </span>{
+                <span class="hljs-keyword">echo</span> <span class="hljs-string">"Hola $this-&gt;name"</span>;
+            }
+        
+        }
+        
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> 
+        </span>{
+            <span class="hljs-keyword">public</span> $type;
+        }
+        
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Admin</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Person</span> 
+        </span>{
+            <span class="hljs-keyword">public</span> $name = <span class="hljs-string">'Administrador'</span>;
+        }
+        
+        $user = <span class="hljs-keyword">new</span> User;
+        $user-&gt;type = <span class="hljs-keyword">new</span> Admin;
+        $user-&gt;type-&gt;greet();
+        </code></pre>
+        <p>Son conceptos, métodos o formas que usamos a veces sin saber que estos conceptos existen. Revisa en detalle cada cosa y trata de hacer un ejercicio por concepto para que estos formen parte de ti.</p>
+        </div>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 15 de 19 - Iniciando nuestro proyecto: PHPUnit y clases heredadas</h2>
+    <pre class="prettyprint">
+            
+        > composer require --dev phpunit/phpunit
+    </pre>
+    <pre class="prettyprint">
+            
+        {
+            "name": "aliensanderdiaz/post",
+            "description": "proyecto de POO",
+            "autoload": {
+                "psr-4": {
+                    "App\\": "src/"
+                }
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            }
+        }
+        
+    </pre>
+    <pre>
+        > composer dump
+    </pre>
+    <pre class="prettyprint">
+            
+        &lt?xml version="1.0" encoding="UTF-8"?>
+        &ltphpunit bootstrap="vendor/autoload.php" colors="true">
+            &lttestsuite name="Test directory">
+                &ltdirectory>tests&lt/directory>
+            &lt/testsuite>
+        &lt/phpunit>
+    </pre>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        use PHPUnit\Framework\TestCase;
+        use App\Post;
+        use App\Comment;
+        
+        class PostTest extends TestCase
+        {
+            public function test_add_comment_to_post()
+            {
+                $post = new Post();
+                $comment = new Comment();
+        
+                $post->addComment($comment);
+        
+                $this->assertEquals(1, $post->countComments());
+                $this->assertInstanceOf(Comment::class, $post->getComments()[0]);
+            }
+        }
+    </pre>
+    <pre class="prettyprint">
+            
+    > vendor/phpunit/phpunit/phpunit
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 16 de 19 - Continuando con nuestro proyecto</h2>
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        namespace App;
+        
+        class Post
+        {
+        
+            public $comments = [];
+            public function addComment(Comment $comment)
+            {
+                // array_push($this->comments, $comment);
+                $this->comments[] = $comment;
+            }
+        
+            public function countComments()
+            {
+                return count($this->comments);
+            }
+        
+            public function getComments()
+            {
+                return $this->comments;
+            }
+        }
+        
+    </pre>
+
+    <pre class="prettyprint">
+            
+        &lt?php
+
+        namespace App;
+        
+        class Comment
+        {
+        
+        }
+    </pre>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 17 de 19 - Revision del proyecto</h2>
+    
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 18 de 19 - Reto - Ejercicio</h2>
+    <div class="MaterialLecture-text"><p>Practicar es muy importante, ya que te permitirá pulir tus habilidades de desarrollo y te animo a que realices el siguiente reto con todo lo que has aprendido.</p>
+        <hr>
+        <p>Crea un ejemplo que ilustre la configuración de un post o artículo de un blog. Entendemos que este tipo de soluciones requieren un autor (quien crea el post) y el post (pieza de contenido creada por un autor). Este post tendrá categorías para segmentarlos y hacer un fácil filtrado.</p>
+        <p>¿Qué necesitas?</p>
+        <ol>
+        <li><code>User</code>: clase base para los autores.</li>
+        <li><code>Author</code>: hereda de <code>User</code> y es quien creará a los post o artículos.</li>
+        <li><code>Post</code>: clase protagonista, es quien servirá para dar vida al objetivo principal de un blog.</li>
+        <li><code>Category</code>: clase que servirá para segmentar a nuestros artículos. Es un campo más de los artículos y permitirá por ejemplo que un artículo sea de PHP, Vue.js, JavaScript, etc.</li>
+        </ol>
+        <p>No hay una única solución ni una solución correcta, el objetivo es pensar, practicar y entender poco a poco cómo funciona esta nueva forma de construir proyectos.</p>
+        <p><strong>User.php</strong></p>
+        <pre><code class="language-php"><span class="hljs-meta">
+          
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> 
+        </span>{
+            <span class="hljs-comment"># Code ...</span>
+        }
+        </span></code></pre>
+        <p><strong>Author.php</strong></p>
+        <pre><code class="language-php"><span class="hljs-meta">
+          
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Author</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">User</span> 
+        </span>{
+            <span class="hljs-comment"># Code ...</span>
+        }
+        </span></code></pre>
+        <p><strong>Post.php</strong></p>
+        <pre><code class="language-php"><span class="hljs-meta">
+          
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span> 
+        </span>{
+            <span class="hljs-comment"># Code ...</span>
+        }
+        </span></code></pre>
+        <p><strong>Category.php</strong></p>
+        <pre><code class="language-php"><span class="hljs-meta">
+          
+        <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Category</span>
+        </span>{
+            <span class="hljs-comment"># Code ...</span>
+        }
+        </span></code></pre>
+        <p>Finalmente <strong>index.php</strong>.</p>
+        <p>Desarrolla todos estos archivos, pon en práctica lo aprendido.<br>
+        Compárteme tus resultados en los comentarios y que más añadirías.</p>
+        </div>
+  </article>
+</section>
+
+<hr>
+
+<section class="row">
+  <article class="col">
+    <h2>Sección 19 de 19 - Conclusion - Frameworks PHP</h2>
+    
+  </article>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+</main>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</body>
+
+</html>
